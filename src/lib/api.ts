@@ -3,8 +3,8 @@ import { getCookie, setCookie } from 'cookies-next';
 import { logout } from './auth';
 
 
-//const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-const API_BASE_URL = 'https://cbt-backend-6tdk.onrender.com';
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+//const API_BASE_URL = 'https://cbt-backend-6tdk.onrender.com';
 
 
 const api = axios.create({

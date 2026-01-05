@@ -8,9 +8,9 @@ export default function HomePage() {
         <h1 className="text-xl font-bold fff-main">JustCBT</h1>
 
         <div className="flex gap-8 text-sm font-medium">
-          <a href="#" className="hover:opacity-70">Features</a>
-          <a href="#" className="hover:opacity-70">Pricing</a>
-          <a href="#" className="hover:opacity-70">Purchase</a>
+          <a href="#features" className="hover:opacity-70">Features</a>
+          <a href="#pricing" className="hover:opacity-70">Pricing</a>
+          <a href="#main" className="hover:opacity-70">Purchase</a>
         </div>
       </nav>
 
@@ -22,7 +22,7 @@ export default function HomePage() {
                         from-green-50 via-white to-green-100 opacity-80" />
 
         {/* CONTENT */}
-        <div className="relative max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div id="main" className="relative max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
           
           {/* LEFT — TEXT */}
