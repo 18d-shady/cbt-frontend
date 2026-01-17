@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { getCookie, setCookie } from 'cookies-next';
-import { logout } from './auth';
+
 
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
@@ -86,7 +86,7 @@ function removeCookiesAndLogout() {
   document.cookie = 'cbt_refresh=; Max-Age=0; path=/';
 
   // Optionally, log the user out (you may also want to clear any other session data)
-  logout();
+  //logout();
 }
 
 export default api;

@@ -5,9 +5,8 @@ import { useRouter } from "next/navigation";
 import { loginStudent } from "@/lib/student";
 
 export default function StudentLoginPage() {
-  const [examNo, setExamNo] = useState("dav101");
-  const [password, setPassword] = useState("winston12");
-  const [courseCode, setCourseCode] = useState("mth101");
+  const [examNo, setExamNo] = useState("mys1");
+  const [password, setPassword] = useState("winston2");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -17,7 +16,7 @@ export default function StudentLoginPage() {
     setLoading(true);
 
     try {
-      const data = await loginStudent(examNo, courseCode, password);
+      const data = await loginStudent(examNo, password);
       if (data.valid) {
         // redirect to prelim page with student + exam info
         const studentName = encodeURIComponent(
@@ -25,7 +24,7 @@ export default function StudentLoginPage() {
         );
         const rules = encodeURIComponent(data.exam.rules || "");
         router.push(
-          `/prelim?studentName=${studentName}&courseCode=${courseCode}&rules=${rules}`
+          `/prelim?studentName=${studentName}&examId=${data.exam.id}&rules=${rules}`
         );
       } else {
         setError(data.error || "Invalid login");
@@ -55,14 +54,6 @@ export default function StudentLoginPage() {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className="w-full p-2 border rounded"
-        />
-
-        <label className="block mt-4 mb-2">Test Code</label>
-        <input
-          type="text"
-          value={courseCode}
-          onChange={(e) => setCourseCode(e.target.value)}
           className="w-full p-2 border rounded"
         />
 

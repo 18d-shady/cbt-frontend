@@ -9,7 +9,7 @@ export default function PrelimContent() {
   const searchParams = useSearchParams();
 
   const studentName = searchParams.get("studentName") || "Student";
-  const courseCode = searchParams.get("courseCode") || "";
+  const examId = searchParams.get("examId") || "";
   const rules = searchParams.get("rules") || "No rules provided.";
   const errorFromQuery = searchParams.get("error");
 
@@ -20,8 +20,8 @@ export default function PrelimContent() {
     setLoading(true);
     setError(null);
     try {
-      await startExamSession(courseCode);
-      router.push(`/exam/${courseCode}`);
+      await startExamSession(Number(examId));
+      router.push(`/exam/${examId}`);
     } catch (err: any) {
       setError(err.error || "Could not start exam");
     } finally {

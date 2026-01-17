@@ -1,16 +1,112 @@
+
+"use client";
+import { useState} from "react";
 import Image from "next/image";
+import { requestDemo } from "@/lib/school";
+import { useRouter } from "next/navigation";
+
 
 export default function HomePage() {
+  // State for Demo Modal and Form
+  const [showDemo, setShowDemo] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
+  const router = useRouter();
+
+  const goToPayment = (plan: string) => {
+    router.push(`/payment?plan=${plan}`);
+  };
+
+  
+  const handleDemoSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      await requestDemo(formData);
+      alert(`Thank you ${formData.name}, your demo request has been sent! Youll hear from us soon.`);
+      setShowDemo(false);
+    } catch (error) {
+      alert("Failed to send request. Please check your connection.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <>
-      {/* NAVBAR */}
-      <nav className="w-full px-8 py-5 flex items-center justify-between font-grotesk">
-        <h1 className="text-xl font-bold fff-main">JustCBT</h1>
+      {/* DEMO MODAL OVERLAY */}
+      {showDemo && (
+        <div className="fixed inset-0 bg-black/60 z-[100] flex items-center justify-center p-4 backdrop-blur-sm">
+          <div className="bg-white p-8 rounded-2xl max-w-md w-full font-grotesk shadow-2xl animate-in fade-in zoom-in duration-200">
+            <h2 className="text-2xl font-bold fff-main mb-2">Experience JustCBT</h2>
+            <p className="text-gray-500 text-sm mb-6">Enter your details and our team will reach out for a guided walkthrough.</p>
+            
+            <form onSubmit={handleDemoSubmit} className="flex flex-col gap-4">
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600">FULL NAME</label>
+                <input 
+                  required 
+                  disabled={isSubmitting}
+                  className="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" 
+                  placeholder="e.g. Dr. Jane Smith" 
+                  onChange={(e) => setFormData({...formData, name: e.target.value})} 
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600">SCHOOL EMAIL</label>
+                <input 
+                  required 
+                  type="email" 
+                  disabled={isSubmitting}
+                  className="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" 
+                  placeholder="admin@yourschool.com" 
+                  onChange={(e) => setFormData({...formData, email: e.target.value})} 
+                />
+              </div>
+              <div className="space-y-1">
+                <label className="text-xs font-semibold text-gray-600">PHONE NUMBER</label>
+                <input 
+                  required 
+                  type="tel" 
+                  disabled={isSubmitting}
+                  className="w-full border border-gray-200 p-3 rounded-xl focus:ring-2 focus:ring-green-500 outline-none transition" 
+                  placeholder="+234..." 
+                  onChange={(e) => setFormData({...formData, phone: e.target.value})} 
+                />
+              </div>
+              
+              <button 
+                type="submit" 
+                disabled={isSubmitting}
+                className="bgg-main text-white p-4 rounded-xl font-bold mt-2 hover:brightness-110 disabled:opacity-50 transition flex justify-center"
+              >
+                {isSubmitting ? "Sending..." : "Submit Request"}
+              </button>
+              
+              <button 
+                type="button" 
+                disabled={isSubmitting}
+                onClick={() => setShowDemo(false)} 
+                className="text-gray-400 text-sm font-medium hover:text-gray-600"
+              >
+                Maybe later
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
 
-        <div className="flex gap-8 text-sm font-medium">
-          <a href="#features" className="hover:opacity-70">Features</a>
-          <a href="#pricing" className="hover:opacity-70">Pricing</a>
-          <a href="#main" className="hover:opacity-70">Purchase</a>
+      {/* NAVBAR */}
+      <nav className="sticky top-0 bg-white/80 backdrop-blur-md z-40 w-full px-8 py-5 flex items-center justify-between border-b border-gray-100">
+        <h1 className="text-xl font-bold fff-main tracking-tight">JustCBT</h1>
+        <div className="flex gap-8 text-sm font-semibold text-gray-700">
+          <a href="#features" className="hover:text-green-600 transition">Features</a>
+          <a href="#pricing" className="hover:text-green-600 transition">Pricing</a>
+          <button onClick={() => goToPayment('monthly')} 
+            className="text-green-700 bg-green-50 px-4 py-1 rounded-full hover:bg-green-100 transition"
+          >
+            Get Started
+          </button>
         </div>
       </nav>
 
@@ -24,7 +120,6 @@ export default function HomePage() {
         {/* CONTENT */}
         <div id="main" className="relative max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
-          
           {/* LEFT — TEXT */}
           <div className="text-left animate-fade-slide">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 fff-main">
@@ -41,11 +136,12 @@ export default function HomePage() {
             </p>
 
             <div className="flex gap-6">
-              <button className="font-semibold underline underline-offset-4 fff-main">
+              <button onClick={() => setShowDemo(true)} className="font-bold underline underline-offset-8 fff-main hover:opacity-80 transition">
                 Book a Demo
               </button>
-
-              <button className="font-semibold underline underline-offset-4 fff-main">
+              <button onClick={() => goToPayment('trial')} 
+                className="font-bold underline underline-offset-8 fff-main hover:opacity-80 transition disabled:opacity-50"
+              >
                 Start Free Trial
               </button>
             </div>
@@ -54,11 +150,9 @@ export default function HomePage() {
           {/* RIGHT — IMAGE + SHAPE */}
           <div className="relative w-full h-[520px] flex items-center justify-center animate-float">
             
-            {/* Green shapeless background */}
             <div className="absolute w-[480px] h-[480px] bgg-main opacity-90
                             rounded-[60%_40%_70%_30%/40%_60%_40%_60%]" />
 
-            {/* Image */}
             <div className="relative w-[420px] h-[420px] overflow-hidden
                             rounded-[45%_55%_35%_65%/60%_40%_60%_40%] shadow-xl">
               <Image
@@ -78,7 +172,6 @@ export default function HomePage() {
       <section id="features" className="py-24 px-6 bg-white font-grotesk">
         <div className="max-w-7xl mx-auto text-center">
 
-          {/* Section title */}
           <h2 className="text-3xl md:text-4xl font-bold mb-4 fff-main">
             Built for Modern CBT Exams
           </h2>
@@ -88,21 +181,14 @@ export default function HomePage() {
             computer-based tests — from setup to results.
           </p>
 
-          {/* Feature cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-
             {/* CBT Exams */}
             <div className="p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 mx-auto mb-6 rounded-full bgg-main flex items-center justify-center text-white font-bold">
                 CBT
               </div>
-              <h3 className="font-semibold text-lg mb-3">
-                Computer-Based Tests
-              </h3>
-              <p className="text-sm text-gray-600">
-                Deliver secure, timed CBT exams with automatic submission
-                and instant grading.
-              </p>
+              <h3 className="font-semibold text-lg mb-3">Computer-Based Tests</h3>
+              <p className="text-sm text-gray-600">Deliver secure, timed CBT exams with automatic submission and instant grading.</p>
             </div>
 
             {/* Question Types */}
@@ -183,7 +269,6 @@ export default function HomePage() {
       <section id="pricing" className="py-24 px-6 bg-gray-50 font-grotesk">
         <div className="max-w-5xl mx-auto text-center">
 
-          {/* Title */}
           <h2 className="text-3xl md:text-4xl font-bold mb-4 fff-main">
             Simple, Transparent Pricing
           </h2>
@@ -193,33 +278,23 @@ export default function HomePage() {
             No hidden fees.
           </p>
 
-          {/* Pricing Card */}
           <div className="max-w-md mx-auto bg-white rounded-3xl shadow-lg border border-gray-100 p-10">
 
-            {/* Plan name */}
-            <h3 className="text-xl font-semibold mb-6">
-              JustCBT Standard
-            </h3>
+            <h3 className="text-xl font-semibold mb-6">JustCBT Standard</h3>
 
-            {/* Monthly price */}
             <div className="mb-6">
               <span className="text-4xl font-bold fff-main">₦10,000</span>
               <span className="text-gray-600"> / month</span>
             </div>
 
-            {/* Divider */}
             <div className="w-full h-px bg-gray-200 my-6" />
 
-            {/* Yearly price */}
             <div className="mb-10">
               <span className="text-3xl font-bold fff-main">₦100,000</span>
               <span className="text-gray-600"> / year</span>
-              <p className="text-sm text-gray-500 mt-2">
-                Save ₦20,000 when billed yearly
-              </p>
+              <p className="text-sm text-gray-500 mt-2">Save ₦20,000 when billed yearly</p>
             </div>
 
-            {/* Features list */}
             <ul className="text-sm text-gray-700 space-y-3 mb-10 text-left">
               <li>✔ Unlimited CBT exams</li>
               <li>✔ Multiple question types</li>
@@ -228,13 +303,18 @@ export default function HomePage() {
               <li>✔ Secure exam sessions</li>
             </ul>
 
-            {/* Actions */}
             <div className="flex flex-col gap-4">
-              <button className="w-full py-3 rounded-xl bgg-main text-white font-semibold hover:opacity-90 transition">
+              <button 
+                onClick={() => goToPayment('monthly')} 
+                className="w-full py-3 rounded-xl bgg-main text-white font-semibold hover:opacity-90 transition"
+              >
                 Purchase Now
               </button>
 
-              <button className="w-full py-3 rounded-xl border bdd-main fff-main font-semibold hover:bg-green-50 transition">
+              <button 
+                onClick={() => setShowDemo(true)}
+                className="w-full py-3 rounded-xl border bdd-main fff-main font-semibold hover:bg-green-50 transition"
+              >
                 Book a Demo
               </button>
             </div>
@@ -332,7 +412,6 @@ export default function HomePage() {
 
         </div>
       </footer>
-
     </>
   );
 }

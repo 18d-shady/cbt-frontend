@@ -1,35 +1,35 @@
 import api from "./api";
 
 // Fetch exam details
-export async function getExamDetail(courseCode: string) {
-  const res = await api.get(`/api/exam/${courseCode}/`);
+export async function getExamDetail(examId: number) {
+  const res = await api.get(`/api/exam/${examId}/`);
   return res.data;
 }
 
 // Get question by index
-export async function getQuestionByIndex(courseCode: string, index: number) {
-  const res = await api.get(`/api/exam/${courseCode}/question/${index}/`);
+export async function getQuestionByIndex(examId: number, index: number) {
+  const res = await api.get(`/api/exam/${examId}/question/${index}/`);
   return res.data;
 }
 
 // Save student answer
-export async function saveAnswer(questionId: number, selectedOption: string) {
+export async function saveAnswer(questionId: number, answerText: string) {
   const res = await api.post("/api/answer/", {
     questionId,
-    selectedOption,
+    selectedOption: answerText
   });
   return res.data;
 }
 
 
 // Remaining time
-export async function getRemainingTime(courseCode: string) {
-  const res = await api.get(`/api/exam/${courseCode}/time/`);
+export async function getRemainingTime(examId: number) {
+  const res = await api.get(`/api/exam/${examId}/time/`);
   return res.data;
 }
 
 // End exam session (submit)
-export async function endExamSession(courseCode: string) {
-  const res = await api.post(`/api/exam/${courseCode}/end/`);
+export async function endExamSession(examId: number) {
+  const res = await api.post(`/api/exam/${examId}/end/`);
   return res.data;
 }
