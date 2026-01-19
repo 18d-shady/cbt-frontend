@@ -4,6 +4,7 @@ import { useState} from "react";
 import Image from "next/image";
 import { requestDemo } from "@/lib/school";
 import { useRouter } from "next/navigation";
+import { Menu, X } from "lucide-react"
 
 
 export default function HomePage() {
@@ -12,6 +13,9 @@ export default function HomePage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const router = useRouter();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => setIsOpen(!isOpen);
 
   const goToPayment = (plan: string) => {
     router.push(`/payment?plan=${plan}`);
@@ -96,18 +100,44 @@ export default function HomePage() {
         </div>
       )}
 
-      {/* NAVBAR */}
-      <nav className="sticky top-0 bg-white/80 backdrop-blur-md z-40 w-full px-8 py-5 flex items-center justify-between border-b border-gray-100">
-        <h1 className="text-xl font-bold fff-main tracking-tight">JustCBT</h1>
-        <div className="flex gap-8 text-sm font-semibold text-gray-700">
-          <a href="#features" className="hover:text-green-600 transition">Features</a>
-          <a href="#pricing" className="hover:text-green-600 transition">Pricing</a>
-          <button onClick={() => goToPayment('monthly')} 
-            className="text-green-700 bg-green-50 px-4 py-1 rounded-full hover:bg-green-100 transition"
-          >
-            Get Started
-          </button>
+      <nav className="sticky top-0 bg-white/80 backdrop-blur-md z-40 w-full px-6 md:px-12 py-5 border-b border-gray-100">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          {/* LOGO */}
+          <h1 className="text-xl font-bold fff-main tracking-tight">JustCBT</h1>
+
+          {/* DESKTOP LINKS (Hidden on Mobile) */}
+          <div className="hidden md:flex gap-8 text-sm font-semibold text-gray-700 items-center">
+            <a href="#features" className="hover:text-green-600 transition">Features</a>
+            <a href="#pricing" className="hover:text-green-600 transition">Pricing</a>
+            <button 
+              onClick={() => goToPayment('monthly')} 
+              className="text-green-700 bg-green-50 px-4 py-1 rounded-full hover:bg-green-100 transition"
+            >
+              Get Started
+            </button>
+          </div>
+
+          {/* MOBILE MENU BUTTON (Hidden on Desktop) */}
+          <div className="md:hidden flex items-center">
+            <button onClick={toggleMenu} className="text-gray-700 focus:outline-none">
+              {isOpen ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          </div>
         </div>
+
+        {/* MOBILE DROPDOWN MENU */}
+        {isOpen && (
+          <div className="md:hidden absolute top-full left-0 w-full bg-white border-b border-gray-100 p-6 flex flex-col gap-6 text-center font-semibold text-gray-700 animate-in slide-in-from-top-2 duration-200">
+            <a href="#features" onClick={() => setIsOpen(false)} className="hover:text-green-600">Features</a>
+            <a href="#pricing" onClick={() => setIsOpen(false)} className="hover:text-green-600">Pricing</a>
+            <button 
+              onClick={() => { goToPayment('monthly'); setIsOpen(false); }} 
+              className="w-full text-green-700 bg-green-50 py-3 rounded-xl hover:bg-green-100 transition"
+            >
+              Get Started
+            </button>
+          </div>
+        )}
       </nav>
 
       {/* HERO */}
@@ -118,7 +148,7 @@ export default function HomePage() {
                         from-green-50 via-white to-green-100 opacity-80" />
 
         {/* CONTENT */}
-        <div id="main" className="relative max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div id="main" className=" mt-20 md:mt-0 relative max-w-7xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
 
           {/* LEFT — TEXT */}
           <div className="text-left animate-fade-slide">
