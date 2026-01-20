@@ -117,10 +117,23 @@ export default function ExamScreen() {
     }
   };
 
+  // Inside ExamScreen component
   const handleSubmit = async () => {
+    // 1. Add Confirmation
+    const hasUnanswered = Object.keys(answeredList).length < totalQuestions;
+    const message = hasUnanswered 
+      ? "You have unanswered questions. Are you sure you want to submit?" 
+      : "Are you sure you want to submit your exam?";
+
+    if (!window.confirm(message)) return;
+
     try {
       const result = await endExamSession(Number(examId));
-      router.push(`/submit?score=${result.score}`);
+      
+      // 2. Pass more info to the submit page
+      // We check if the exam has any essay questions to inform the student
+      const hasEssays = exam.has_essays || false; // Ensure your backend returns this
+      router.push(`/submit?score=${result.score}&hasEssays=${hasEssays}`);
     } catch (err) {
       router.push("/submit?error=Could not submit exam");
     }
