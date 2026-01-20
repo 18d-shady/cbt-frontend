@@ -66,7 +66,10 @@ function PaymentContent() {
             }
 
             setMessage("🎉 Trial activated! Redirecting...");
-            setTimeout(() => router.push("/dashboard"), 2000);
+            //setTimeout(() => router.push("/dashboard"), 2000);
+            setTimeout(() => {
+              window.location.href = "https://davisolehi.pythonanywhere.com/admin/";
+            }, 2000);
             return;
         }
 
