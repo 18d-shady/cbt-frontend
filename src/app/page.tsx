@@ -238,7 +238,7 @@ export default function HomePage() {
             {/* Admin Setup */}
             <div className="p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 mx-auto mb-6 rounded-full bgg-main flex items-center justify-center text-white font-bold">
-                ⚙
+                <svg className="h-6 w-6 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <path d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 0 0 2.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 0 0 1.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 0 0 -1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 0 0 -2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 0 0 -2.573 -1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 0 0 -1.065 -2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 0 0 1.066 -2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />  <circle cx="12" cy="12" r="3" /></svg>
               </div>
               <h3 className="font-semibold text-lg mb-3">
                 Admin Exam Setup
@@ -252,7 +252,7 @@ export default function HomePage() {
             {/* Student Registration */}
             <div className="p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 mx-auto mb-6 rounded-full bgg-main flex items-center justify-center text-white font-bold">
-                👤
+                <svg className="h-6 w-6 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <circle cx="12" cy="7" r="4" />  <path d="M6 21v-2a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v2" /></svg>
               </div>
               <h3 className="font-semibold text-lg mb-3">
                 Student & Course Registration
@@ -280,7 +280,7 @@ export default function HomePage() {
             {/* Secure & Reliable */}
             <div className="p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition">
               <div className="w-12 h-12 mx-auto mb-6 rounded-full bgg-main flex items-center justify-center text-white font-bold">
-                🔒
+                <svg className="h-6 w-6 text-white"  width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>  <rect x="5" y="11" width="14" height="10" rx="2" />  <circle cx="12" cy="16" r="1" />  <path d="M8 11v-4a4 4 0 0 1 8 0v4" /></svg>
               </div>
               <h3 className="font-semibold text-lg mb-3">
                 Secure & Reliable
