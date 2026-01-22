@@ -4,7 +4,8 @@ import { getCookie, setCookie } from 'cookies-next';
 
 
 //const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
-const API_BASE_URL = 'https://davisolehi.pythonanywhere.com/';
+const API_BASE_URL = 'https://app.justcbt.com.ng/';
+//const API_BASE_URL = 'https://davisolehi.pythonanywhere.com/';
 //const API_BASE_URL = 'https://cbt-backend-6tdk.onrender.com';
 
 
