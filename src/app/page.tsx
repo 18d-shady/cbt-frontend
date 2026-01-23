@@ -106,7 +106,7 @@ export default function HomePage() {
           <h1 className="text-xl font-bold fff-main tracking-tight">JustCBT</h1>
 
           {/* DESKTOP LINKS (Hidden on Mobile) */}
-          <div className="hidden md:flex gap-8 text-sm font-semibold text-gray-700 items-center">
+          <div className="hidden md:flex gap-8 text-sm text-gray-700 items-center">
             <a href="#features" className="hover:text-green-600 transition">Features</a>
             <a href="#pricing" className="hover:text-green-600 transition">Pricing</a>
             <button 
